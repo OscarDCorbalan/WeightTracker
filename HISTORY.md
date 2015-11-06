@@ -5,3 +5,4 @@
 *v0.2.0: Now can PUT a new weight under /:user/weights/:year/:month/:day/:weight
 *v0.2.1: added README
 *v0.2.2: fix month on PUT
+*v0.2.3: fix README list
