@@ -29,7 +29,7 @@ MongoClient.connect('mongodb://mdbuser123:mdbuser123@ds047504.mongolab.com:47504
     var weights = new WeightsDAO(db);
 
     DATA.forEach(function(elem){
-        weights.insertWeight(USER, 2015, elem[0], elem[1]-1, elem[2], insertHandler);
+        weights.insertWeight(USER, 2015, elem[0], elem[1], elem[2], insertHandler);
     });
 
     function insertHandler(err, doc){

@@ -30,7 +30,7 @@ function WeightsDAO(db) {
         const query = {
             '_id': { // note: this _id limits to have only ONE weight entry per user/day - then we can do an upsert and forget about many things
                 'user': user,
-                'date': new Date(year, month, day),
+                'date': new Date(year, month-1, day),
             }
         };
         const update = {
