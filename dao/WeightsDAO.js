@@ -14,7 +14,10 @@ function WeightsDAO(db) {
 
     this.getUserWeights = function(user, callback){
         const query = {'_id.user': user};
-        clWeight.find(query).toArray(function(err, weights) {
+        var options = {
+	        'sort' : [ ['_id.date', -1] ]
+        };
+        clWeight.find(query,{},options).toArray(function(err, weights) {
             if (err) return callback(err);
             console.log('Got', weights.length, 'weights for user', user);
             callback(err, weights);
