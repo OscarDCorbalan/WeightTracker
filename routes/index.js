@@ -5,13 +5,11 @@ module.exports = exports = function(app, db) {
 
     var content = new ContentHandler(db);
 
-    // The main page of the blog
-    // app.get('/', contentHandler.displayMainPage);
-
+    // Get all the user weights
     app.get('/:user/weights/', content.displayUserData);
 
-    // A single post, which can be commented on
-    //app.post('/:user/weights/:year/:month/:day/:weight', content.insertWeight)
+    // Insert a new weight
+    app.put('/:user/weights/:year/:month/:day/:weight', content.insertWeight)
 
     // Error handling middleware
     app.use(ErrorHandler);

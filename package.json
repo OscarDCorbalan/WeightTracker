@@ -1,7 +1,7 @@
 {
   "name": "tracker",
-  "version": "0.1.1",
-  "description": "Person tracker",
+  "version": "0.2.0",
+  "description": "Weight tracker",
   "main": "index.js",
   "scripts": {
     "test": "node test/dataInsert.js"
