@@ -12,12 +12,20 @@ function WeightsDAO(db) {
 
     const clWeight = db.collection('weight');
 
+    this.getUserWeights = function(user, callback){
+        const query = {'_id.user': user};
+        clWeight.find(query).toArray(function(err, weights) {
+            if (err) return callback(err);
+            console.log('Got', weights.length, 'weights for user', user);
+            callback(err, weights);
+        });
+    };
 
     this.insertWeight = function(user, year, month, day, weight, callback) {
         console.log('inserting weight entry for', user, 'data:', year, month, day, weight);
 
         const query = {
-            '_id': { // note: this id limits to have only ONE weight entry per user/day
+            '_id': { // note: this _id limits to have only ONE weight entry per user/day - then we can do an upsert and forget about many things
                 'user': user,
                 'date': new Date(year, month, day),
             }
