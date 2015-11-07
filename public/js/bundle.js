@@ -19018,38 +19018,38 @@ module.exports = require('./lib/React');
 var React = require('react');
 var ReactDOM = require('react-dom');
 
-function run() {
+function getId(str) {
+    return document.getElementById(str);
+}
+
+function bareRender() {
     ReactDOM.render(React.createElement(
         'h1',
         null,
-        'WOP! (Work In Progress)'
-    ), document.getElementById('title'));
+        'Hello, oscardc!'
+    ), getId('title'));
     ReactDOM.render(React.createElement(
         'p',
         null,
-        'Please go to ',
-        React.createElement(
-            'a',
-            { href: 'http://localhost/oscardc/weights/' },
-            'http://localhost/oscardc/weights/'
-        ),
-        '.',
-        React.createElement('br', null),
         React.createElement(
             'strong',
             null,
             'TODO'
         ),
-        ': show here a list of users instead of this stub page.'
-    ), document.getElementById('text'));
-}
+        ': show here a list of users instead of this page, to select which user to load data from.'
+    ), getId('text'));
+};
+
+function loadAllWeights(evt) {};
 
 const loadedStates = ['complete', 'loaded', 'interactive'];
 
 if (loadedStates.includes(document.readyState) && document.body) {
-    run();
+    bareRender();
+    window.removeEventListener('DOMContentLoaded', bareRender);
+    getId('btnLoadAllWeights').addEventListener('click', loadAllWeights);
 } else {
-    window.addEventListener('DOMContentLoaded', run, false);
+    window.addEventListener('DOMContentLoaded', bareRender, false);
 }
 
 },{"react":158,"react-dom":2}]},{},[159]);
