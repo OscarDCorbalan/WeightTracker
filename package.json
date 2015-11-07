@@ -9,7 +9,7 @@
   "main": "index.js",
   "scripts": {
     "test": "node test/dataInsert.js",
-    "build": "browserify -t [babelify --presets [react]] react/main.js -o public/js/bundle.js",
+    "browserify": "browserify -t [ babelify --presets [ react ] ] react/main.js -o public/js/bundle.js",
     "start": "node index.js"
   },
   "author": "Oscar Dominguez Corbalan",

@@ -8,3 +8,4 @@
 *v0.2.3: fix README list
 *v0.2.4: fix GET weights returning an error
 *v0.3.0: added a React stub to render at the bare URL
+*v0.3.1: improve bare URL stub

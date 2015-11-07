@@ -19022,8 +19022,26 @@ function run() {
     ReactDOM.render(React.createElement(
         'h1',
         null,
-        'Hello, world!'
-    ), document.getElementById('example'));
+        'WOP! (Work In Progress)'
+    ), document.getElementById('title'));
+    ReactDOM.render(React.createElement(
+        'p',
+        null,
+        'Please go to ',
+        React.createElement(
+            'a',
+            { href: 'http://localhost/oscardc/weights/' },
+            'http://localhost/oscardc/weights/'
+        ),
+        '.',
+        React.createElement('br', null),
+        React.createElement(
+            'strong',
+            null,
+            'TODO'
+        ),
+        ': show here a list of users instead of this stub page.'
+    ), document.getElementById('text'));
 }
 
 const loadedStates = ['complete', 'loaded', 'interactive'];
