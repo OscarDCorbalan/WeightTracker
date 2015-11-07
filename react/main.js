@@ -2,7 +2,9 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 
-function getId(str){return document.getElementById(str);}
+const USER = 'oscardc'; // TODO: multi-user app
+
+function getId(str){return document.getElementById(str);};
 
 function bareRender(){
     ReactDOM.render(<h1>Hello, oscardc!</h1>,
@@ -12,6 +14,14 @@ function bareRender(){
 };
 
 function loadAllWeights(evt){
+    fetch('/' + USER + '/weights/')
+        .then(function(response){
+            return response.json();
+        })
+        .then(function(data){
+            console.log(data);
+        });
+    
 
 };
 

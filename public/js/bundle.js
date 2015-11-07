@@ -19018,9 +19018,11 @@ module.exports = require('./lib/React');
 var React = require('react');
 var ReactDOM = require('react-dom');
 
+const USER = 'oscardc'; // TODO: multi-user app
+
 function getId(str) {
     return document.getElementById(str);
-}
+};
 
 function bareRender() {
     ReactDOM.render(React.createElement(
@@ -19040,7 +19042,13 @@ function bareRender() {
     ), getId('text'));
 };
 
-function loadAllWeights(evt) {};
+function loadAllWeights(evt) {
+    fetch('/' + USER + '/weights/').then(function (response) {
+        return response.json();
+    }).then(function (data) {
+        console.log(data);
+    });
+};
 
 const loadedStates = ['complete', 'loaded', 'interactive'];
 
