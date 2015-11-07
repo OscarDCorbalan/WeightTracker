@@ -1,10 +1,11 @@
 {
   "name": "tracker",
-  "version": "0.2.0",
+  "version": "0.2.4",
   "description": "Weight tracker",
   "main": "index.js",
   "scripts": {
-    "test": "node test/dataInsert.js"
+    "test": "node test/dataInsert.js",
+    "start": "node index.js"
   },
   "author": "Oscar Dominguez Corbalan",
   "license": "ISC",
