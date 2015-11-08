@@ -11,6 +11,9 @@ module.exports = exports = function(app, db) {
     // Insert a new weight
     app.put('/:user/weights/:year/:month/:day/:weight', content.insertWeight)
 
+    // Delete a weight
+    app.delete('/:user/weights/:year/:month/:day', content.deleteWeight)
+
     // Error handling middleware
     app.use(ErrorHandler);
 };

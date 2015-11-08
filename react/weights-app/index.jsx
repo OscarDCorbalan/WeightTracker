@@ -4,14 +4,11 @@ import { LineChart } from 'react-d3';
 
 class WeightsApp extends React.Component {
     constructor(props) {
-        console.log('constructor', 'before');
         super(props);
         this.state = {weights:[], mean: 0};
-        console.log('constructor', 'after');
     }
 
     componentWillMount() {
-        console.log('componentWillMount', 'before');
         var arWeights = [];
         fetch('http://localhost/oscardc/weights')
         .then((response) => {
@@ -21,19 +18,26 @@ class WeightsApp extends React.Component {
             var min = weights[0];
             var max = weights[0];
             var total = 0;
+
+            // Get the needed data
             arWeights = weights.map((elem) => {
-                // Delete _id and instead just save the date, removing the user name
+                // Delete get the date and weight
                 var entry = {
-                    date: new Date(elem._id.date),
-                    weight: elem.weight
+                    weight: elem.weight,
+                    year: elem._id.year,
+                    month: elem._id.month,
+                    day: elem._id.day,
                 };
 
                 // Check for min and max weight to mark them later
                 if(elem.weight < min.weight) min = entry;
                 if(elem.weight > max.weight) max = entry;
                 total += elem.weight;
+
+                // Return de weigth entry
                 return entry;
             });
+
             // Add a flag to min/max entries
             min.min = true;
             max.max = true;
@@ -44,7 +48,6 @@ class WeightsApp extends React.Component {
                 mean: total / weights.length
             });
         });
-        console.log('componentWillMount', 'after');
     }
 
     render(){
@@ -73,7 +76,7 @@ class WeightsApp extends React.Component {
                         </tr>
                     </thead>
                     <tbody>
-                         {this.state.weights.map(this._renderRow)}
+                         {this.state.weights.map(this._renderRow, this)}
                     </tbody>
                 </table>
             </div>
@@ -81,11 +84,7 @@ class WeightsApp extends React.Component {
     }
 
     _renderRow(elem, index){
-        let date = elem.date;
-        let year = date.getFullYear();
-        let month = date.getMonth();
-        let day = date.getDate();
-        let key = year+'-'+month+'-'+day;
+        let key = elem.year+'-'+elem.month+'-'+elem.day;
 
         // type: Bootstrap row class
         let type = '';
@@ -94,37 +93,57 @@ class WeightsApp extends React.Component {
 
         return (
            <tr key={key} className={type}>
-               <td><span className="glyphicon glyphicon-pencil" aria-hidden="true"></span><span className="glyphicon glyphicon-remove" aria-hidden="true"></span></td>
+               <td>
+                   <span className="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                   <button onClick={this._removeValue}><span className="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+               </td>
                <td>{elem.weight}</td>
-               <td>{year}</td>
-               <td>{month}</td>
-               <td>{day}</td>
+               <td>{elem.year}</td>
+               <td>{elem.month}</td>
+               <td>{elem.day}</td>
            </tr>
        );
     }
 
+    _removeValue(e){
+        const marker = e.dispatchMarker;
+        var key = marker.indexOf('$');
+        key = marker.substr(key+1, 10);
+        if(key.charAt(6) === '-') key = key.substr(0,key.length-1);
+        var date = new Date(key);
+        const year = date.getFullYear();
+        const month = date.getMonth()+1;
+        const day = date.getDate();
+        const url = '/oscardc/weights/'+year+'/'+month+'/'+day+'/';
+        fetch(url, {method: 'delete'})
+        .then(response => {
+            console.log(response);
+        })
+
+
+        //this.setState({items: nextItems, text: nextText});
+    }
+
     _getChartData(){
+        let _parseEntryDate = (entry) => new Date(entry.year, entry.month-1, entry.day, 0, 0, 0);
+
         const mean = this.state.mean;
         const weights = this.state.weights;
 
         // We only need two points to plot the mean-weight line
-        var arMean =  [
-            {
-                x: weights[weights.length-1].date,
+        var arMean =  [{
+                x: _parseEntryDate( weights[weights.length-1] ),
                 y: mean
             },{
-                x: weights[0].date,
+                x: _parseEntryDate( weights[0] ),
                 y: mean
-            }
-        ];
+        }];
 
         // Iterate the weight entries to create the graph points
-        var arWeights = weights.reverse().map(function(elem,index){
-            return {
-                x: elem.date,
-                y: elem.weight
-            };
-        });
+        var arWeights = weights.reverse().map((elem,index) => ({
+            x: _parseEntryDate( elem ),
+            y: elem.weight
+        }));
 
         return  [{
             name: 'Day\'s weight',

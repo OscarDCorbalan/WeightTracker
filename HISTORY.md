@@ -26,3 +26,4 @@
 *v0.5.1: Move weights to the first column.
 *v0.5.2: Mark highest and lowest weight (user story 6).
 *v0.5.3: Plot mean weight.
+*v0.6.0: Add button to delete weight entries.

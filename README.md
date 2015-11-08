@@ -13,6 +13,7 @@ After changes, run 'gulp build' and then npm start.
 ##User stories
 * Story 1: User wants to delete weights.
   * Possibility 1: Click 'delete row' icon -> the weight entry gets deleted
+  * HALF-DONE: button removes the entry, the UI still needs to be refreshed
 * Story 2: User wants to add a new weight Refactored
   * Poss. 1: Click 'new entry' icon/button ->
     * Poss. 1.1: show a modal form -> entry data -> click add button

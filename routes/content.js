@@ -21,6 +21,15 @@ function ContentHandler (db) {
                 if(err) return next(err);
                 return res.json(object);
             });
+        },
+
+        deleteWeight: function(req, res, next){
+            const prm = req.params;
+            weights.deleteWeight(prm.user, prm.year, prm.month, prm.day, function(err, ok){
+                if(err) return next(err);
+                console.log(ok)
+                return res.status(200).send();
+            });
         }
     }
 };
