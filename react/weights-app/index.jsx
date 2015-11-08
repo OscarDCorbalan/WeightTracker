@@ -46,10 +46,10 @@ class WeightsApp extends React.Component {
                 <table className="table table-hover table-condensed">
                     <thead>
                         <tr>
+                            <th>Weight</th>
                             <th>Year</th>
                             <th>Month</th>
                             <th>Day</th>
-                            <th>Weight</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -68,10 +68,10 @@ class WeightsApp extends React.Component {
        let key = year+'-'+month+'-'+day;
        return (
            <tr key={key}>
+               <td>{elem.weight}</td>
                <td>{year}</td>
                <td>{month}</td>
                <td>{day}</td>
-               <td>{elem.weight}</td>
            </tr>
        );
     }
