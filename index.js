@@ -17,4 +17,5 @@ MongoClient.connect('mongodb://mdbuser123:mdbuser123@ds047504.mongolab.com:47504
 
     // Start the application
     app.listen(process.env.PORT || 80);
+    console.log('App listening on', http.address().port);
 });
