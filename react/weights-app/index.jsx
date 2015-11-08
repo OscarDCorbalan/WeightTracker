@@ -30,18 +30,40 @@ class WeightsApp extends React.Component {
         console.log('componentWillMount', 'after');
     }
 
+    renderWeightRows(){
+
+    }
     render(){
         console.log('render', 'before', this.state);
                     //<WeightRow listado={this.state.weights} />
-        if(this.state.weights.length > 0) {
-            return (
-                <div className="container-fluid">
-                    {this.state.weights[0].date}: {this.state.weights[0].weight}
-                </div>
-            )
-        } else {
-            return <p className="text-center">Loading weights...</p>
+        if(this.state.weights.length === 0) {
+            return <p className="text-center">Loading weights...</p>;
         }
+        // else
+        return (
+            <div className="container">
+                <table className="table table-hover table-condensed">
+                    <thead>
+                        <tr>
+                            <th>Year</th><th>Month</th><th>Day</th><th>Weight</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                         {this.state.weights.map(function(elem, index){
+                            let date = new Date(elem.date);
+                            return (
+                                <tr key={index}>
+                                    <td>{date.getFullYear()}</td>
+                                    <td>{date.getMonth()}</td>
+                                    <td>{date.getDate()}</td>
+                                    <td>{elem.weight}</td>
+                                </tr>
+                            );
+                        })}
+                    </tbody>
+                </table>
+            </div>
+        );
         console.log('render', 'after');
     }
 

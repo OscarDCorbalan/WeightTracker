@@ -17,12 +17,7 @@ function bareRender(){
 
 function loadAllWeights(evt){
     console.log('loadAllWeights', 'before');
-    let arWeights = [
-        {date: new Date(2015, 11, 7), weight:66},
-        {date: new Date(2015, 11, 6), weight:64},
-        {date: new Date(2015, 11, 5), weight:86}
-    ];
-    ReactDOM.render(<WeightsApp weights={arWeights} />, getId('weightData')); // TODO: multi-user
+    ReactDOM.render(<WeightsApp />, getId('weightData')); // TODO: multi-user
     console.log('loadAllWeights', 'after');
 };
 
