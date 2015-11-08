@@ -19,7 +19,6 @@ class WeightsApp extends React.Component {
             return response.json();
         })
         .then((weights) => {
-            console.log(weights);
             var min = weights[0];
             var max = weights[0];
             var total = 0;
@@ -37,7 +36,6 @@ class WeightsApp extends React.Component {
                 // Check for min and max weight to mark them later
                 if(elem.weight < min.weight) min = entry;
                 if(elem.weight > max.weight) max = entry;
-                console.log(total, elem.weight, elem);
                 total += elem.weight;
 
                 // Return de weigth entry
@@ -47,7 +45,7 @@ class WeightsApp extends React.Component {
             // Add a flag to min/max entries
             min.min = true;
             max.max = true;
-            console.log(total, weights.length, total / weights.length);
+
             // Set state
             this.setState({
                 weights: arWeights,

@@ -28,3 +28,4 @@
 *v0.5.3: Plot mean weight.
 *v0.6.0: Add button to delete weight entries.
 *v0.7.0: Add form to add new entries.
+*v0.7.1: Remove some console logs.
