@@ -18,15 +18,26 @@ class WeightsApp extends React.Component {
             return response.json();
         })
         .then((weights) => {
-            // delete _id and instead just save the date, removing the user name
+            var min = weights[0];
+            var max = weights[0];
+
             arWeights = weights.map((elem) => {
-                return {
+                // Delete _id and instead just save the date, removing the user name
+                var entry = {
                     date: new Date(elem._id.date),
                     weight: elem.weight
                 };
+
+                // Check for min and max weight to mark them later
+                if(elem.weight < min.weight) min = entry;
+                if(elem.weight > max.weight) max = entry;
+
+                return entry;
             });
-            console.log(arWeights);
-            this.setState( {weights:arWeights} );
+            // Add a flat to min max entries
+            min.min = true;
+            max.max = true;
+            this.setState( {weights: arWeights} );
         });
         console.log('componentWillMount', 'after');
     }
@@ -37,13 +48,14 @@ class WeightsApp extends React.Component {
             return <p className="text-center">Loading weights...</p>;
         }
         // else
+        // Chart data
         const chartViewBox = {x: 0, y: 0, width: 1000, height: 400};
         var chartData = this._getChartData();
         return (
             <div>
                 <LineChart title="Your weight chart" legend={true} data={chartData} width='100%' height={400} viewBoxObject={chartViewBox}
                     yAxisLabel="Weight" xAxisLabel="Date" gridHorizontal={true} />
-                <table className="table table-hover table-condensed">
+                <table className="table table-condensed">
                     <thead>
                         <tr>
                             <th>Weight</th>
@@ -61,13 +73,19 @@ class WeightsApp extends React.Component {
     }
 
     _renderRow(elem, index){
-       let date = elem.date;
-       let year = date.getFullYear();
-       let month = date.getMonth();
-       let day = date.getDate();
-       let key = year+'-'+month+'-'+day;
-       return (
-           <tr key={key}>
+        let date = elem.date;
+        let year = date.getFullYear();
+        let month = date.getMonth();
+        let day = date.getDate();
+        let key = year+'-'+month+'-'+day;
+
+        // type: Bootstrap row class
+        let type = '';
+        if(!!elem.min && !elem.max) type = 'success'; // The double check should avoid strange behaviour when there's only one row
+        if(!!elem.max && !elem.min) type = 'danger';
+
+        return (
+           <tr key={key} className={type}>
                <td>{elem.weight}</td>
                <td>{year}</td>
                <td>{month}</td>
