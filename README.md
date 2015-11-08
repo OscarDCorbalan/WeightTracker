@@ -22,6 +22,7 @@ After changes, run 'gulp build' and then npm start.
 * Story 4: User wants to use a password for its account.  
 * Story 5: User wants to edit data because delete+create su*ks.
 * Story 6: User wants the rows to be green when s/he's lost some weight, and red when s/he's gained.
+* Story 7: User wants a graphic with the weights.
 
 ##Behind the scenes
 * Improvement 1: Make gulp watch source files changes and auto-build in response.

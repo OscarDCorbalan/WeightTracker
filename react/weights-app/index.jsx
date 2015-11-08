@@ -37,18 +37,19 @@ class WeightsApp extends React.Component {
         }
         // else
         return (
-            <div className="container">
-                <table className="table table-hover table-condensed">
-                    <thead>
-                        <tr>
-                            <th>Year</th><th>Month</th><th>Day</th><th>Weight</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                         {this.state.weights.map(this._renderRow)}
-                    </tbody>
-                </table>
-            </div>
+            <table className="table table-hover table-condensed">
+                <thead>
+                    <tr>
+                        <th>Year</th>
+                        <th>Month</th>
+                        <th>Day</th>
+                        <th>Weight</th>
+                    </tr>
+                </thead>
+                <tbody>
+                     {this.state.weights.map(this._renderRow)}
+                </tbody>
+            </table>
         );
     }
 
