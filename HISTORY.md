@@ -22,3 +22,4 @@
 *v0.4.5: Refactor main.jsx
 *v0.4.6: Change title after loading weights
 *v0.4.7: Add glyph to button. Remove redundant div.
+*v0.5.0: Added D3.js to plot graphs with the user weights (user story 7).

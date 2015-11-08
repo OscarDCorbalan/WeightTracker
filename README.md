@@ -22,10 +22,11 @@ After changes, run 'gulp build' and then npm start.
 * Story 4: User wants to use a password for its account.  
 * Story 5: User wants to edit data because delete+create su*ks.
 * Story 6: User wants the rows to be green when s/he's lost some weight, and red when s/he's gained.
-* Story 7: User wants a graphic with the weights.
+* ~~Story 7: User wants a graphic with the weights.~~
 
 ##Behind the scenes
 * Improvement 1: Make gulp watch source files changes and auto-build in response.
 * Improvement 2: (requirement for Story 3, multi-user app):
   * Create a MongoDB table for the users. Just save the username as the id to start with.
   * Check the current user in the REST url and use it in the dataflow.
+* Improvement 3: Divide our React's WeightsApp into two subcomponents, the table and the graph. The main compoenent should retrieve the data and the subcomponents each render their html. 
