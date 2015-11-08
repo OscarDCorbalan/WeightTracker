@@ -17,3 +17,4 @@
   * Added step npm install on the Readme
 *v0.4.1: Async load weights on button press and output the first of them with the react component
 *v0.4.2: Render a table with all the weights using the react component
+*v0.4.3: Refactored code that renders rows
