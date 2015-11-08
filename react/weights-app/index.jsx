@@ -6,7 +6,7 @@ class WeightsApp extends React.Component {
     constructor(props) {
         console.log('constructor', 'before');
         super(props);
-        this.state = {weights:[]};
+        this.state = {weights:[], mean: 0};
         console.log('constructor', 'after');
     }
 
@@ -20,7 +20,7 @@ class WeightsApp extends React.Component {
         .then((weights) => {
             var min = weights[0];
             var max = weights[0];
-
+            var total = 0;
             arWeights = weights.map((elem) => {
                 // Delete _id and instead just save the date, removing the user name
                 var entry = {
@@ -31,13 +31,18 @@ class WeightsApp extends React.Component {
                 // Check for min and max weight to mark them later
                 if(elem.weight < min.weight) min = entry;
                 if(elem.weight > max.weight) max = entry;
-
+                total += elem.weight;
                 return entry;
             });
-            // Add a flat to min max entries
+            // Add a flag to min/max entries
             min.min = true;
             max.max = true;
-            this.setState( {weights: arWeights} );
+
+            // Set state
+            this.setState({
+                weights: arWeights,
+                mean: total / weights.length
+            });
         });
         console.log('componentWillMount', 'after');
     }
@@ -53,11 +58,14 @@ class WeightsApp extends React.Component {
         var chartData = this._getChartData();
         return (
             <div>
-                <LineChart title="Your weight chart" legend={true} data={chartData} width='100%' height={400} viewBoxObject={chartViewBox}
+                <h2>Your weight chart</h2>
+                <LineChart legend={true} data={chartData} width={1000} height={400} viewBoxObject={chartViewBox}
                     yAxisLabel="Weight" xAxisLabel="Date" gridHorizontal={true} />
+                <h2>Your weight table</h2>
                 <table className="table table-condensed">
                     <thead>
                         <tr>
+                            <th>Tools</th>
                             <th>Weight</th>
                             <th>Year</th>
                             <th>Month</th>
@@ -86,6 +94,7 @@ class WeightsApp extends React.Component {
 
         return (
            <tr key={key} className={type}>
+               <td><span className="glyphicon glyphicon-pencil" aria-hidden="true"></span><span className="glyphicon glyphicon-remove" aria-hidden="true"></span></td>
                <td>{elem.weight}</td>
                <td>{year}</td>
                <td>{month}</td>
@@ -95,18 +104,38 @@ class WeightsApp extends React.Component {
     }
 
     _getChartData(){
-        var vals = this.state.weights.reverse().map(function(elem,index){
+        const mean = this.state.mean;
+        const weights = this.state.weights;
+
+        // We only need two points to plot the mean-weight line
+        var arMean =  [
+            {
+                x: weights[weights.length-1].date,
+                y: mean
+            },{
+                x: weights[0].date,
+                y: mean
+            }
+        ];
+
+        // Iterate the weight entries to create the graph points
+        var arWeights = weights.reverse().map(function(elem,index){
             return {
                 x: elem.date,
                 y: elem.weight
             };
         });
+
         return  [{
-            name: "Weights",
-            values: vals,
+            name: 'Day\'s weight',
+            values: arWeights,
             strokeWidth: 2
+        },{
+            name: 'Mean weight',
+            values: arMean,
+            strokeWidth: 1,
+            strokeDashArray: '4,4'
         }];
-  ;
     }
 
 }
