@@ -9,6 +9,8 @@ MongoClient.connect('mongodb://mdbuser123:mdbuser123@ds047504.mongolab.com:47504
     if(err) throw err;
     console.log('MongoDB connection OK');
 
+    app.set('port', (process.env.PORT || 80));
+
     // Serve static content
     app.use(express.static(__dirname + '/public'));
 
@@ -16,6 +18,7 @@ MongoClient.connect('mongodb://mdbuser123:mdbuser123@ds047504.mongolab.com:47504
     routes(app, db);
 
     // Start the application
-    app.listen(process.env.PORT || 80);
-    console.log('App listening on', http.address().port);
+    app.listen(app.get('port'), function() {
+        console.log('Node app is running on port', app.get('port'));
+    });
 });
