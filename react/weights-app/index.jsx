@@ -2,36 +2,47 @@
 import React from 'react';
 
 class WeightsApp extends React.Component {
-/*    constructor(props) {
-        super(props)
-        this.state = { weights: [] }
+    constructor(props) {
+        console.log('constructor', 'before');
+        super(props);
+        this.state = {weights:[]};
+        console.log('constructor', 'after');
     }
 
     componentWillMount() {
+        console.log('componentWillMount', 'before');
+        var arWeights = [];
         fetch('http://localhost/oscardc/weights')
-        .then(function(response){
+        .then((response) => {
             return response.json();
         })
-        .then(function(weights){
+        .then((weights) => {
             // delete _id and instead just save the date, removing the user name
-            weights.forEach(function(elem){
-                elem.date = elem._id.date;
-                delete elem._id;
+            arWeights = weights.map((elem) => {
+                return {
+                    date: elem._id.date,
+                    weight: elem.weight
+                };
             });
-            this.setState({ weights: weights })
+            console.log(arWeights);
+            this.setState( {weights:arWeights} );
         });
-    }*/
+        console.log('componentWillMount', 'after');
+    }
 
     render(){
-        /*if(this.state.weights.length > 0) {
+        console.log('render', 'before', this.state);
+                    //<WeightRow listado={this.state.weights} />
+        if(this.state.weights.length > 0) {
             return (
                 <div className="container-fluid">
-                <EmpleadoList listado={this.state.empleados} />
+                    {this.state.weights[0].date}: {this.state.weights[0].weight}
                 </div>
             )
-        } else {*/
-            return <p className="text-center">loading weights...</p>
-        //}
+        } else {
+            return <p className="text-center">Loading weights...</p>
+        }
+        console.log('render', 'after');
     }
 
 }

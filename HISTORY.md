@@ -11,5 +11,8 @@
 *v0.3.1: improve bare URL stub
 *v0.3.2: add (stubbed) button to load weight data
 *v0.3.3: load ajax data with the button
-*v4.0.0: Setup workflow with gulp
+*v0.4.0: Setup workflow with gulp
   * 'gulp build' now launches browserify plus babelify to build our JS bundle. For some reason babelify was throwing an error on ES6 imports with an npm task.
+  * Added a React component that renders a stub text when we request data with the button
+  * Added step npm install on the Readme
+*v0.4.1: Async load weights on button press and output the first of them with the react component
