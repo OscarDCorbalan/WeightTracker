@@ -1,6 +1,6 @@
 {
   "name": "tracker",
-  "version": "0.3.3",
+  "version": "0.4.0",
   "description": "Weight tracker",
   "repository": {
     "type": "git",
@@ -9,7 +9,6 @@
   "main": "index.js",
   "scripts": {
     "test": "node test/dataInsert.js",
-    "browserify": "browserify -t [ babelify --presets [ react ] ] react/main.js -o public/js/bundle.js",
     "start": "node index.js"
   },
   "author": "Oscar Dominguez Corbalan",
@@ -21,9 +20,12 @@
     "express": "^4.13.3",
     "mongodb": "^2.0.47",
     "react": "^0.14.2",
-    "react-dom": "^0.14.2"
+    "react-dom": "^0.14.2",
+    "react-legit-table": "^0.5.0"
   },
   "devDependencies": {
-    "browserify": "^12.0.1"
+    "browserify": "^12.0.1",
+    "gulp": "^3.9.0",
+    "vinyl-source-stream": "^1.1.0"
   }
 }

@@ -1,6 +1,8 @@
-// main.js
-var React = require('react');
-var ReactDOM = require('react-dom');
+'use strict';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import WeightsApp from './weights-app';
+
 
 const USER = 'oscardc'; // TODO: multi-user app
 
@@ -14,15 +16,12 @@ function bareRender(){
 };
 
 function loadAllWeights(evt){
-    fetch('/' + USER + '/weights/')
-        .then(function(response){
-            return response.json();
-        })
-        .then(function(data){
-            console.log(data);
-        });
-    
-
+    ReactDOM.render(<WeightsApp />, getId('weightData'));
+    /*var weights = [
+        {date: new Date(2015, 11, 7), weight:66},
+        {date: new Date(2015, 11, 6), weight:64},
+        {date: new Date(2015, 11, 5), weight:86}
+    ];*/
 };
 
 const loadedStates = ['complete', 'loaded', 'interactive'];
