@@ -29,6 +29,7 @@ function loadAllWeights(evt){
 
     // ... and render
     ReactDOM.render(<WeightsApp />, getId('weightData'));
+    ReactDOM.render(<h1>These are your weight records, {HARDCODED_USER}</h1>, getId('title'));
 };
 
 
