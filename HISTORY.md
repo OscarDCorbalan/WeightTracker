@@ -19,3 +19,4 @@
 *v0.4.2: Render a table with all the weights using the react component
 *v0.4.3: Refactored code that renders rows
 *v0.4.4: Add TODOs to Readme
+*v0.4.5: Refactor main.jsx

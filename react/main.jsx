@@ -4,30 +4,38 @@ import ReactDOM from 'react-dom';
 import WeightsApp from './weights-app';
 
 
-const USER = 'oscardc'; // TODO: multi-user app
+const HARDCODED_USER = 'oscardc'; // TODO: multi-user app
+const LOADED_STATES = ['complete', 'loaded', 'interactive'];
 
 function getId(str){return document.getElementById(str);};
 
-function bareRender(){
-    ReactDOM.render(<h1>Hello, oscardc!</h1>,
-                    getId('title'));
-    ReactDOM.render(<p><strong>TODO</strong>: show here a list of users instead of this page, to select which user to load data from.</p>,
-                    getId('text'));
+function onLoadedHandler(evt /* param not used */ ){
+    // Clean the listener if it was added
+    window.removeEventListener('DOMContentLoaded', onLoadedHandler);
+
+    // Render the title with the user name
+    ReactDOM.render(<h1>Hello, {HARDCODED_USER}!</h1>, getId('title'));
+
+    // Add a listener for the button to load the user's weights
+    getId('btnLoadAllWeights').addEventListener('click', loadAllWeights);
 };
 
+// TODO: use a dynamic user to load the weights
 function loadAllWeights(evt){
-    console.log('loadAllWeights', 'before');
-    ReactDOM.render(<WeightsApp />, getId('weightData')); // TODO: multi-user
-    console.log('loadAllWeights', 'after');
+    // Cleanup the button...
+    let btn = evt.target;
+    btn.removeEventListener('click', loadAllWeights)
+    btn.parentElement.removeChild( btn );
+
+    // ... and render
+    ReactDOM.render(<WeightsApp />, getId('weightData'));
 };
 
-const loadedStates = ['complete', 'loaded', 'interactive'];
 
-if (loadedStates.includes(document.readyState) && document.body) {
-    bareRender();
-    window.removeEventListener('DOMContentLoaded', bareRender);
-    getId('btnLoadAllWeights').addEventListener('click', loadAllWeights)
+// Start the app if everything is loaded, if not just add a listener since we're using async script loading in the browser
+if (LOADED_STATES.includes(document.readyState) && document.body) {
+    onLoadedHandler();
 }
 else {
-    window.addEventListener('DOMContentLoaded', bareRender, false);
+    window.addEventListener('DOMContentLoaded', onLoadedHandler, false);
 }

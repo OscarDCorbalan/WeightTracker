@@ -20,7 +20,8 @@ After changes, run 'gulp build' and then npm start.
 * Story 3: User wants to register an account.
   * Poss. 1: click register -> (input name <-> check in real time if user exists) -> click create
 * Story 4: User wants to use a password for its account.  
-* Story 5: Wser wants to edit data because delete+create su*ks.
+* Story 5: User wants to edit data because delete+create su*ks.
+* Story 6: User wants the rows to be green when s/he's lost some weight, and red when s/he's gained.
 
 ##Behind the scenes
 * Improvement 1: Make gulp watch source files changes and auto-build in response.
