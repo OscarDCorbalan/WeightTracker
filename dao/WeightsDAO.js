@@ -45,7 +45,7 @@ function WeightsDAO(db) {
 
         const query = this.getIdQuery(user, year, month, day);
         const update = {
-            'weight': weight
+            'weight': Number(weight)
         };
         const options = {
             'upsert': true

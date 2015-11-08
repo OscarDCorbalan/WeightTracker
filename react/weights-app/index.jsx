@@ -9,12 +9,17 @@ class WeightsApp extends React.Component {
     }
 
     componentWillMount() {
+        this._fetchData();
+    }
+
+    _fetchData(){
         var arWeights = [];
         fetch('http://localhost/oscardc/weights')
         .then((response) => {
             return response.json();
         })
         .then((weights) => {
+            console.log(weights);
             var min = weights[0];
             var max = weights[0];
             var total = 0;
@@ -23,15 +28,16 @@ class WeightsApp extends React.Component {
             arWeights = weights.map((elem) => {
                 // Delete get the date and weight
                 var entry = {
-                    weight: elem.weight,
-                    year: elem._id.year,
-                    month: elem._id.month,
-                    day: elem._id.day,
+                    weight: Number(elem.weight),
+                    year: Number(elem._id.year),
+                    month: Number(elem._id.month),
+                    day: Number(elem._id.day),
                 };
 
                 // Check for min and max weight to mark them later
                 if(elem.weight < min.weight) min = entry;
                 if(elem.weight > max.weight) max = entry;
+                console.log(total, elem.weight, elem);
                 total += elem.weight;
 
                 // Return de weigth entry
@@ -41,7 +47,7 @@ class WeightsApp extends React.Component {
             // Add a flag to min/max entries
             min.min = true;
             max.max = true;
-
+            console.log(total, weights.length, total / weights.length);
             // Set state
             this.setState({
                 weights: arWeights,
@@ -59,12 +65,21 @@ class WeightsApp extends React.Component {
         // Chart data
         const chartViewBox = {x: 0, y: 0, width: 1000, height: 400};
         var chartData = this._getChartData();
+        var formDate = 'form-date';
+        var formWeight = 'form-weight';
+        var boundAdd = this.addValue.bind(this);
+
         return (
             <div>
-                <h2>Your weight chart</h2>
+                <h2>Your progression chart</h2>
                 <LineChart legend={true} data={chartData} width={1000} height={400} viewBoxObject={chartViewBox}
                     yAxisLabel="Weight" xAxisLabel="Date" gridHorizontal={true} />
-                <h2>Your weight table</h2>
+                <h2>Your weights</h2>
+                <div>
+                    <input id="form-date" type="date" min="2015-10-01" max="2015-11-30" required/>
+                    <input id="form-weight" type="number" min="40" max="150" required/>
+                    <button onClick={boundAdd}><span className="glyphicon glyphicon-save" aria-hidden="true"></span>Add</button>
+                </div>
                 <table className="table table-condensed">
                     <thead>
                         <tr>
@@ -76,7 +91,7 @@ class WeightsApp extends React.Component {
                         </tr>
                     </thead>
                     <tbody>
-                         {this.state.weights.map(this._renderRow, this)}
+                         {this.state.weights.reverse().map(this._renderRow, this)}
                     </tbody>
                 </table>
             </div>
@@ -88,14 +103,15 @@ class WeightsApp extends React.Component {
 
         // type: Bootstrap row class
         let type = '';
+        //
         if(!!elem.min && !elem.max) type = 'success'; // The double check should avoid strange behaviour when there's only one row
         if(!!elem.max && !elem.min) type = 'danger';
 
+        var boundRemove = this.removeValue.bind(this, key);
         return (
            <tr key={key} className={type}>
                <td>
-                   <span className="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                   <button onClick={this._removeValue}><span className="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                   <button onClick={boundRemove}><span className="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
                </td>
                <td>{elem.weight}</td>
                <td>{elem.year}</td>
@@ -105,23 +121,38 @@ class WeightsApp extends React.Component {
        );
     }
 
-    _removeValue(e){
-        const marker = e.dispatchMarker;
-        var key = marker.indexOf('$');
-        key = marker.substr(key+1, 10);
-        if(key.charAt(6) === '-') key = key.substr(0,key.length-1);
+    addValue(e){
+        // Jesus cries seing these document access here, but it's just a prototype project :)
+        const weight = Number(document.getElementById('form-weight').value);
+        const date = document.getElementById('form-date').valueAsDate;
+        const year = date.getFullYear();
+        const month = date.getMonth()+1;
+        const day = date.getDate();
+
+        fetch('/oscardc/weights/'+year+'/'+month+'/'+day+'/'+weight+'/', {method:'put'})
+        .then((response) => { this._fetchData(); })
+    }
+
+    removeValue(key){
         var date = new Date(key);
         const year = date.getFullYear();
         const month = date.getMonth()+1;
         const day = date.getDate();
-        const url = '/oscardc/weights/'+year+'/'+month+'/'+day+'/';
-        fetch(url, {method: 'delete'})
-        .then(response => {
-            console.log(response);
+
+        fetch('/oscardc/weights/'+year+'/'+month+'/'+day+'/', {method: 'delete'})
+        .then((response) => {
+            this._fetchData();/*
+            var newState = this.state;
+            newState.mean *= newState.weights.length;
+            newState.weights = newState.weights.filter((entry) =>{
+                if(entry.year!=year || entry.month!=month || entry.day!=day) return true;
+                newState.mean -= entry.weight;
+                return false;
+            });
+            if(newState.weights.length>0) newState.mean /= newState.weights.length;
+            else newState.mean = 0;
+            this.setState(newState);*/
         })
-
-
-        //this.setState({items: nextItems, text: nextText});
     }
 
     _getChartData(){
