@@ -29,3 +29,4 @@
 *v0.6.0: Add button to delete weight entries.
 *v0.7.0: Add form to add new entries.
 *v0.7.1: Remove some console logs.
+*v0.7.2: Remove reference to localhost.

@@ -14,7 +14,7 @@ class WeightsApp extends React.Component {
 
     _fetchData(){
         var arWeights = [];
-        fetch('http://localhost/oscardc/weights')
+        fetch('/oscardc/weights')
         .then((response) => {
             return response.json();
         })
