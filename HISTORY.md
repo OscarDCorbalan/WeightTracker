@@ -29,3 +29,4 @@
   *v0.7.2: Remove reference to localhost.
   *v0.7.3: Prettier form using Bootstrap classes.
   *v0.7.4: Add Array.includes pollyfill.
+  *v0.7.5: Add fetch and Promise pollyfills.
