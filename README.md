@@ -1,3 +1,6 @@
+#Data input doesn't work on Internet Explorer!
+Because it doesn't accept date type on forms. It's a pending work.
+
 #How to run
 * Get a local/free Mongo database
 * Clone the project.
@@ -29,3 +32,4 @@ After changes, run 'gulp build' and then npm start.
   * Table (can be further subdivided).
   * Graph.
   * Form.
+* Improvement 4: Make the date input work in IE.

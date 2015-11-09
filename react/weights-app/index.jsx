@@ -66,7 +66,6 @@ class WeightsApp extends React.Component {
         var formDate = 'form-date';
         var formWeight = 'form-weight';
         var boundAdd = this.addValue.bind(this);
-
         return (
             <div>
                 <h2>Your progression chart</h2>
@@ -77,7 +76,7 @@ class WeightsApp extends React.Component {
                     <h3>Add new weight</h3>
                     <div className="input-group">
                         <span className="input-group-addon">Date</span>
-                        <input id="form-date" className="form-control"type="date" min="2015-10-01" max="2015-11-30" required/>
+                        <input id="form-date" className="form-control" type="date" min="2015-10-01" max="2015-11-30" required/>
                     </div>
                     <br/>
                     <div className="input-group">
