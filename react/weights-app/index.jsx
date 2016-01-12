@@ -1,7 +1,10 @@
 'use strict';
 import React from 'react';
 import { LineChart } from 'react-d3';
+import DateControl from './DateControl';
+import NumberControl from './NumberControl';
 
+var a = 0;
 class WeightsApp extends React.Component {
     constructor(props) {
         super(props);
@@ -54,8 +57,11 @@ class WeightsApp extends React.Component {
         });
     }
 
+
     render(){
+        a = a + 1;
         console.log('render', this.state);
+        //if(a === 2) throw new Error("a")
         if(this.state.weights.length === 0) {
             return <p className="text-center">Loading weights...</p>;
         }
@@ -73,16 +79,9 @@ class WeightsApp extends React.Component {
                     yAxisLabel="Weight" xAxisLabel="Date" gridHorizontal={true} />
                 <h2>Your weights</h2>
                 <div>
-                    <h3>Add new weight</h3>
-                    <div className="input-group">
-                        <span className="input-group-addon">Date</span>
-                        <input id="form-date" className="form-control" type="date" min="2015-10-01" max="2015-11-30" required/>
-                    </div>
+                    <DateControl minDate="2015-10-01" maxDate="2020-11-30"/>
                     <br/>
-                    <div className="input-group">
-                        <span className="input-group-addon">Weight</span>
-                        <input id="form-weight" className="form-control" placeholder="Weight in kilograms" type="number" min="40" max="150" required/>
-                    </div>
+                    <NumberControl name="Weight" id="form-weight" placeholder="Weight in kilograms" type="number" min="40" max="150"/>
                     <br/>
                     <button className="btn btn-default" onClick={boundAdd}><span className="glyphicon glyphicon-save" aria-hidden="true"></span>Add</button>
                     <br/>

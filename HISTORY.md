@@ -30,3 +30,4 @@
   *v0.7.3: Prettier form using Bootstrap classes.
   *v0.7.4: Add Array.includes pollyfill.
   *v0.7.5: Add fetch and Promise pollyfills.
+  *v0.7.6: Transform date and kg inputs to React modules.
