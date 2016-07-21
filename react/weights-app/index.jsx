@@ -3,11 +3,17 @@ import React from 'react';
 import { LineChart } from 'react-d3';
 import DateControl from './DateControl';
 import NumberControl from './NumberControl';
+import InputWeightControl from './InputWeightControl';
 
-var a = 0;
+//var a = 0;
 class WeightsApp extends React.Component {
     constructor(props) {
         super(props);
+        this.setDefaultState();
+        this.user = props.user
+    }
+
+    setDefaultState() {
         this.state = {weights:[], mean: 0};
     }
 
@@ -17,11 +23,17 @@ class WeightsApp extends React.Component {
 
     _fetchData(){
         var arWeights = [];
-        fetch('/oscardc/weights')
+        const url = [this.user, 'weights'].join('/');
+        fetch(url)
         .then((response) => {
             return response.json();
         })
         .then((weights) => {
+            if(weights.length === 0){
+                this.setDefaultState();
+                return;
+            }
+
             var min = weights[0];
             var max = weights[0];
             var total = 0;
@@ -59,33 +71,31 @@ class WeightsApp extends React.Component {
 
 
     render(){
-        a = a + 1;
+        //a = a + 1;
         console.log('render', this.state);
+
+        const chartViewBox = {x: 0, y: 0, width: 1000, height: 400};
+        const formDate = 'form-date';
+        const formWeight = 'form-weight';
+        const boundAdd = this.addValue.bind(this);
+
         //if(a === 2) throw new Error("a")
         if(this.state.weights.length === 0) {
-            return <p className="text-center">Loading weights...</p>;
+            return (
+                <InputWeightControl onClick={boundAdd} />
+            );
         }
+
         // else
         // Chart data
-        const chartViewBox = {x: 0, y: 0, width: 1000, height: 400};
-        var chartData = this._getChartData();
-        var formDate = 'form-date';
-        var formWeight = 'form-weight';
-        var boundAdd = this.addValue.bind(this);
+        const chartData = this._getChartData();
         return (
             <div>
                 <h2>Your progression chart</h2>
                 <LineChart legend={true} data={chartData} width={1000} height={400} viewBoxObject={chartViewBox}
                     yAxisLabel="Weight" xAxisLabel="Date" gridHorizontal={true} />
                 <h2>Your weights</h2>
-                <div>
-                    <DateControl minDate="2015-10-01" maxDate="2020-11-30"/>
-                    <br/>
-                    <NumberControl name="Weight" id="form-weight" placeholder="Weight in kilograms" type="number" min="40" max="150"/>
-                    <br/>
-                    <button className="btn btn-default" onClick={boundAdd}><span className="glyphicon glyphicon-save" aria-hidden="true"></span>Add</button>
-                    <br/>
-                </div>
+                <InputWeightControl onClick={boundAdd} />
                 <h3>Weights records</h3>
                 <table className="table table-condensed">
                     <thead>
@@ -136,7 +146,9 @@ class WeightsApp extends React.Component {
         const month = date.getMonth()+1;
         const day = date.getDate();
 
-        fetch('/oscardc/weights/'+year+'/'+month+'/'+day+'/'+weight+'/', {method:'put'})
+        const url = [this.user, 'weights', year, month, day, weight].join('/');
+
+        fetch(url, {method:'put'})
         .then((response) => {
             this._fetchData();
             document.getElementById('form-weight').value = undefined;
@@ -150,7 +162,8 @@ class WeightsApp extends React.Component {
         const month = date.getMonth()+1;
         const day = date.getDate();
 
-        fetch('/oscardc/weights/'+year+'/'+month+'/'+day+'/', {method: 'delete'})
+        const url = [this.user, 'weights', year, month, day].join('/');
+        fetch(url, {method: 'delete'})
         .then((response) => {
             this._fetchData();/*
             var newState = this.state;

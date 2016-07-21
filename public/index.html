@@ -13,10 +13,15 @@
         <div class="container">
             <div id="title"><progress></progress></div>
             <!-- button to load weight data -->
-            <button id="btnLoadAllWeights" type="button" class="btn btn-primary">
-                <span class="glyphicon glyphicon-cloud-download" aria-hidden="true"></span>
-                Load all weight data
-            </button>
+            <form id="frmUsername" class="form-inline">
+                <div class="form-group">
+                    <input id="iTxtUser" type="text" class="form-control"  placeholder="User"></input>
+                    <button id="btnLoadAllWeights" type="button" class="btn btn-primary">
+                        <span class="glyphicon glyphicon-cloud-download" aria-hidden="true"></span>
+                        Load all weight data
+                    </button>
+                </div>
+            </div>
             <div id="weightData"></div>
         </div>
     </body>

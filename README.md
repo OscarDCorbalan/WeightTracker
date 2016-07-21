@@ -16,8 +16,7 @@ After changes, run 'gulp build' and then npm start.
 ##User stories
 * ~~Story 1: User wants to delete weights.~~
 * ~~Story 2: User wants to add a new weight.~~
-* Story 3: User wants to register an account.
-  * Poss. 1: click register -> (input name <-> check in real time if user exists) -> click create
+* ~~Story 3: User wants to register an account.~~
 * Story 4: User wants to use a password for its account.  
 * Story 5: User wants to edit data because delete+create su*ks.
 * ~~Story 6: User wants the highest weight row in red, and the lowest in green.~~
@@ -31,5 +30,5 @@ After changes, run 'gulp build' and then npm start.
 * Improvement 3: Divide our React's WeightsApp into subcomponents (the main compoenent should retrieve the data and the subcomponents each do their render):
   * Table (can be further subdivided).
   * Graph.
-  * Form.
+  * ~~Form.~~
 * Improvement 4: Make the date input work in IE.
