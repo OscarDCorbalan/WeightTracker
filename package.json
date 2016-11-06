@@ -1,10 +1,10 @@
 {
   "name": "tracker",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "description": "Weight tracker",
   "repository": {
     "type": "git",
-    "url": "git://github.com/OscarDoc/tracker.git"
+    "url": "git://github.com/OscarDCorbalan/tracker.git"
   },
   "main": "index.js",
   "scripts": {
