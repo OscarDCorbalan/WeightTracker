@@ -32,3 +32,7 @@ After changes, run 'gulp build' and then npm start.
   * Graph.
   * ~~Form.~~
 * Improvement 4: Make the date input work in IE.
+
+## Author
+
+[Oscar D.](http://oscardc.com)

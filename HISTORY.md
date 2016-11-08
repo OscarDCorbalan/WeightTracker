@@ -31,3 +31,5 @@
   *v0.7.4: Add Array.includes pollyfill.
   *v0.7.5: Add fetch and Promise pollyfills.
   *v0.7.6: Transform date and kg inputs to React modules.
+*v0.8.0: Multi-user
+  *v0.8.1: Update references after username change.
